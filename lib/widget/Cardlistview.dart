@@ -12,30 +12,35 @@ class CardListView extends HookWidget {
       {'shapename': 'Triangle', 'image': 'lib/images/image.png'},
     ];
 
-    return ListView.builder(
-      padding: const EdgeInsets.all(16.0),
-      itemCount: items.length,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 16.0),
-          child: MyCard(
-            shapename: items[index]['shapename']!,
-            image: items[index]['image']!,
-            onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                    content: Text('clicked on ${items[index]['shapename']}')),
-              );
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          Caculate(name: items[index]['shapename']!,
-                          calculator: ShapeCalculator(),)));
-            },
-          ),
-        );
-      },
+    return Container(
+      color: Colors.white, 
+      child: ListView.builder(
+        padding: const EdgeInsets.all(16.0),
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: MyCard(
+              shapename: items[index]['shapename']!,
+              image: items[index]['image']!,
+              onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      content:
+                          Text('clicked on ${items[index]['shapename']}')),
+                );
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Caculate(
+                              name: items[index]['shapename']!,
+                              calculator: ShapeCalculator(),
+                            )));
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }
