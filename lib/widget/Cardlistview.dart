@@ -30,7 +30,8 @@ class CardListView extends HookWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          Caculate(name: items[index]['shapename']!)));
+                          Caculate(name: items[index]['shapename']!,
+                          calculator: ShapeCalculator(),)));
             },
           ),
         );
