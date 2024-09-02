@@ -1,6 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+class BMICalculatorService {
+  double calculateBMI(double height, double weight) {
+    if (height > 0 && weight > 0) {
+      return weight / ((height / 100) * (height / 100));
+    }
+    return 0.0;
+  }
+
+  String getMessage(double bmi) {
+    if (bmi < 18.5) {
+      return 'Anda perlu makan lebih banyak, BMI Anda rendah.';
+    } else if (bmi >= 18.5 && bmi < 24.9) {
+      return 'Bagus! BMI Anda normal, pertahankan gaya hidup sehat.';
+    } else if (bmi >= 24.9 && bmi < 29.9) {
+      return 'BMI Anda sedikit berlebih, pertimbangkan diet sehat.';
+    } else {
+      return 'BMI Anda tinggi, mungkin perlu diet dan olahraga.';
+    }
+  }
+}
 
 class BMICalculator extends HookWidget {
   const BMICalculator({Key? key}) : super(key: key);
@@ -11,27 +31,14 @@ class BMICalculator extends HookWidget {
     final weightController = useTextEditingController();
     final bmi = useState(0.0);
     final message = useState('');
+    final bmiService = BMICalculatorService();
 
     void calculateBMI() {
       final height = double.tryParse(heightController.text) ?? 0;
       final weight = double.tryParse(weightController.text) ?? 0;
 
-      if (height > 0 && weight > 0) {
-        bmi.value = weight / ((height / 100) * (height / 100));
-
-        if (bmi.value < 18.5) {
-          message.value = 'Anda perlu makan lebih banyak, BMI Anda rendah.';
-        } else if (bmi.value >= 18.5 && bmi.value < 24.9) {
-          message.value = 'Bagus! BMI Anda normal, pertahankan gaya hidup sehat.';
-        } else if (bmi.value >= 24.9 && bmi.value < 29.9) {
-          message.value = 'BMI Anda sedikit berlebih, pertimbangkan diet sehat.';
-        } else {
-          message.value = 'BMI Anda tinggi, mungkin perlu diet dan olahraga.';
-        }
-      } else {
-        bmi.value = 0.0;
-        message.value = 'Masukkan tinggi dan berat badan yang valid.';
-      }
+      bmi.value = bmiService.calculateBMI(height, weight);
+      message.value = bmi.value > 0 ? bmiService.getMessage(bmi.value) : 'Masukkan tinggi dan berat badan yang valid.';
     }
 
     return Scaffold(
@@ -76,7 +83,7 @@ class BMICalculator extends HookWidget {
               ),
             ),
             const SizedBox(height: 24),
-            if (bmi.value > 0) 
+            if (bmi.value > 0)
               Card(
                 color: Colors.tealAccent,
                 child: Padding(
