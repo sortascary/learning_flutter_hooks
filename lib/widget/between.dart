@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:learning_flutter_hooks/widget/Aritmatika.dart';
+import 'package:learning_flutter_hooks/widget/BMI.dart';
+import 'package:learning_flutter_hooks/widget/Cardlistview.dart';
 
 class Between extends HookWidget {
   const Between({super.key});
@@ -13,22 +16,36 @@ class Between extends HookWidget {
             Container(
               margin: EdgeInsets.all(10),
               child: ElevatedButton(
-                onPressed: () {
-                Navigator.pushNamed(context, '/BMI');
-              },
-              child: Text('BMI')
-                        ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => BMICalculator()),
+                    );
+                  },
+                  child: Text('BMI')),
             ),
-
+            Container(
+              margin: EdgeInsets.all(10),
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CardListView()),
+                    );
+                  },
+                  child: Text('Bangun datar')),
+            ),
 
             Container(
               margin: EdgeInsets.all(10),
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/datar');
-                }, 
-              child: Text('Bangun datar')
-                        ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Arithmetic()),
+                    );
+                  },
+                  child: Text('Arirmatika')),
             ),
           ],
         ),
